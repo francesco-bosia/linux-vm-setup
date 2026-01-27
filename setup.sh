@@ -65,3 +65,5 @@ nvim compose.yml
 sudo useradd docker
 sudo usermod -aG docker $USER
 docker compose up
+# Install uv python package manager
+curl -LsSf https://astral.sh/uv/install.sh | sh
