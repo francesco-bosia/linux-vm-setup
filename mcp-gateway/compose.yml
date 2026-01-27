@@ -1,0 +1,36 @@
+services:
+  gateway-context7:
+    image: docker/mcp-gateway
+    command:
+      - --transport=streaming
+      - --servers=context7
+      - --verbose=false
+      - --port=9012
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "9012:9012"
+ 
+  gateway-youtube:
+    image: docker/mcp-gateway
+    command:
+      - --transport=streaming
+      - --servers=youtube_transcript
+      - --verbose=false
+      - --port=9013
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "9013:9013"
+ 
+  gateway-wiki:
+    image: docker/mcp-gateway
+    command:
+      - --transport=streaming
+      - --servers=wikipedia-mcp
+      - --verbose=false
+      - --port=9014
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "9014:9014"
