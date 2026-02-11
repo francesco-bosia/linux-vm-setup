@@ -110,7 +110,7 @@ Subsystem sftp internal-sftp
 # KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org
 
 # Optional: limit to specific users
-# AllowUsers kai bastion
+# AllowUsers <username> bastion
 
 # Slightly stricter login behaviour
 LoginGraceTime 20
@@ -121,7 +121,7 @@ MaxSessions 5
 Disable local password login (optional):
 
 ```bash
-sudo passwd -l kai
+sudo passwd -l <username>
 ```
 
 Disable SSH completely  
@@ -156,3 +156,59 @@ sudo ufw allow OpenSSH
 
 # Allow Tailscale UDP traffic (WireGuard)
 sudo ufw allow 41641/udp
+
+sudo ufw enable
+sudo ufw status verbose
+```
+
+---
+
+## Fail2ban Setup  
+(works for Tailscale SSH too)
+
+```bash
+sudo vim /etc/fail2ban/jail.local
+```
+
+Content:
+
+```
+[DEFAULT]
+bantime = 30m
+findtime = 10m
+maxretry = 5
+backend = systemd
+
+[sshd]
+enabled = true
+port = ssh
+logpath = %(sshd_log)s
+```
+
+Enable:
+
+```bash
+sudo systemctl enable --now fail2ban
+sudo fail2ban-client status sshd
+```
+
+---
+
+## Persistent Journal
+
+```bash
+sudo mkdir -p /var/log/journal
+sudo systemd-tmpfiles --create --prefix /var/log/journal
+sudo systemctl restart systemd-journald
+```
+
+---
+
+## Non-Security Change
+
+`foot` does not render well if the SSH host has not set the right TERM.  
+Add to `~/.bashrc`:
+
+```bash
+export TERM=xterm
+```
