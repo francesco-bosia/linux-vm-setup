@@ -29,23 +29,23 @@ Needs to be adapted with visudo to ask for password:
 sudo visudo -f /etc/sudoers.d/90-cloud-init-users
 ```
 
-Change to:
-
-```
-kai ALL=(ALL) ALL
-```
-
-If the password is not known, SSH into the device as root and use:
-
-```bash
-passwd kai
-```
-
 If there is no sudo or non-root user yet:
 
 ```bash
 adduser username
 usermod -aG sudo username
+```
+
+Change to:
+
+```
+<username> ALL=(ALL) ALL
+```
+
+If the password is not known, SSH into the device as root and use:
+
+```bash
+passwd <username>
 ```
 
 Verify:
