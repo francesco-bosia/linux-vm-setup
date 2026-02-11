@@ -1,4 +1,15 @@
 ## Setup machine
+
+### Info over user
+
+whoami
+id
+lsb_release -a || cat /etc/os-release
+ip a | sed -n '1,120p'
+sudo -n true && echo "Passwordless sudo: YES" || echo "Passwordless sudo: NO (or needs password)"
+
+
+
 Important when created with cloud init:
 check /etc/sudoers and /etc/sudoers.d/ if user is granted passwordless sudo
 e.g. in /etc/sudoers.d/90-cloud-init-users
